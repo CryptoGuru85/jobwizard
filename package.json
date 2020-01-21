@@ -1,0 +1,112 @@
+{
+  "name": "yawik-jobad-wizard",
+  "description": "Multi-step wizard for generating job ads",
+  "productName": "Yawik Jobad Wizard",
+  "author": "Ivaylo Gelov",
+  "private": true,
+  "scripts": {
+    "dev": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/@quasar/app/bin/quasar dev",
+    "build": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/@quasar/app/bin/quasar build",
+    "lint": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/eslint/bin/eslint --ext .js,.vue src",
+    "lintfix": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/eslint/bin/eslint --ext .js,.vue src --fix",
+    "lint-css": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/stylelint/bin/stylelint src/**/*.{vue,css,scss}",
+    "lintfix-css": "node --preserve-symlinks --preserve-symlinks-main ./node_modules/stylelint/bin/stylelint src/**/*.{vue,css,scss} --fix",
+    "prepare": "custompatch",
+    "test": "npx cypress open",
+    "semantic-release": "semantic-release",
+    "test:ci": "npx cypress run",
+    "test:unit": "jest --updateSnapshot",
+    "test:unit:ci": "jest --ci",
+    "test:unit:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch",
+    "test:unit:watchAll": "jest --watchAll",
+    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\"",
+    "test:e2e": "cross-env E2E_TEST=true start-test \"quasar dev\" http-get://localhost:8080 \"cypress open\"",
+    "test:e2e:ci": "cross-env E2E_TEST=true start-test \"quasar dev\" http-get://localhost:8080 \"cypress run\"",
+    "docs:serve": "mkdocs serve -a 0.0.0.0:8000"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.12.4",
+    "@quasar/quasar-ui-qoverlay": "^2.0.0",
+    "apexcharts": "^3.30.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "mitt": "^3.0.0",
+    "quasar": "^2.4.13",
+    "validator": "^13.6.0",
+    "vue": "^3.0.0",
+    "vue-i18n": "^9.1.6",
+    "vue-router": "^4.0.0",
+    "vue3-apexcharts": "^1.4.1",
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.13.14",
+    "@intlify/vue-i18n-loader": "^3.0.0",
+    "@quasar/app": "^3.3.1",
+    "@quasar/quasar-app-extension-testing": "^2.0.2",
+    "@quasar/quasar-app-extension-testing-e2e-cypress": "^3.1.1",
+    "@quasar/quasar-app-extension-testing-unit-jest": "3.0.0-alpha.8",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/gitlab": "^6.0.5",
+    "@semantic-release/npm": "^7.0.8",
+    "@vue/compiler-sfc": "^3.2.26",
+    "babel-eslint": "^10.0.1",
+    "custompatch": "^1.0.17",
+    "cypress": "^9.0.0",
+    "dotenv-flow": "^3.2.0",
+    "eslint": "^7.23.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-quasar": "^1.1.0",
+    "eslint-plugin-vue": "^7.8.0",
+    "eslint-webpack-plugin": "^2.4.0",
+    "semantic-release": "^17.3.0",
+    "stylelint": "^13.9.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.18.0",
+    "stylelint-webpack-plugin": "^1.2.3"
+  },
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/gitlab",
+        {
+          "gitlabUrl": "https://gitlab.com/cross-solution1/applicationform.git",
+          "assets": [
+            {
+              "path": "index.js",
+              "label": "Module"
+            },
+            {
+              "path": "README.md",
+              "label": "Documentation"
+            },
+            {
+              "path": "LICENSE",
+              "label": "License"
+            }
+          ]
+        }
+      ]
+    ]
+  },
+  "browserslist": [
+    "last 2 years, >3%, not dead"
+  ],
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}

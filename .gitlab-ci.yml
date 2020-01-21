@@ -1,0 +1,62 @@
+image: node:latest
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - build/
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+variables:
+  NPM_TOKEN: ${CI_JOB_TOKEN}
+  VUE_APP_I18N_FALLBACK_LOCALE: de
+  VUE_APP_I18N_SUPPORTED_LOCALE: en,de
+
+stages:
+  - test
+  - doc
+  - deploy
+
+cypress:
+  image: cypress/browsers:node16.5.0-chrome94-ff93
+  stage: test
+  script:
+    - env | ( grep YAWIK || echo "ROUTER_BASE=/${CI_PAGES_URL#*://*/}/" )  > .env.local
+    - yarn
+    - yarn "test:e2e:ci"
+  only:
+    variables:
+      - $YAWIK_RUN_CYPRESS == "yes"
+
+mkdocs:
+  stage: doc
+  image: python:3.8-buster
+  script:
+    - pip install -r requirements.txt
+    - mkdocs build --strict
+  artifacts:
+    paths:
+      - build
+
+pages:
+  stage: deploy
+  image: node:lts-slim
+  script:
+    - env | ( grep YAWIK_ROUTER_BASE || echo "ROUTER_BASE=/${CI_PAGES_URL#*://*/}/" )  > .env.local
+    - env | ( grep YAWIK || echo -n "" )  >> .env.local
+    - yarn
+    - yarn build
+    - mkdir .public
+    - cp -r dist/spa/* .public
+    - cp -r build/docs .public
+    - cp dist/spa/index.html .public/404.html
+    - rm -Rf public
+    - mv .public public
+    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

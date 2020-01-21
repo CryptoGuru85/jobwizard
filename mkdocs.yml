@@ -1,0 +1,32 @@
+site_name: Job Wizard
+site_description: Documentation JobWizard
+site_url: https://yawik.github.io/jobwizard/docs/
+copyright: 'Copyright &copy; 2021 Yawik'
+repo_name: yawik/jobwizard
+repo_url: https://gitlab.com/yawik/JobWizard
+site_dir: build/docs
+docs_dir: docs
+theme:
+  name: material
+  logo: assets/yawik-logo.png
+  favicon: images/favicon.png
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/yawik-job-list.css
+extra_javascript:
+  - js/yawik-job-list.js
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - codehilite:
+      guess_lang: true
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.magiclink
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.extra
+  - footnotes
