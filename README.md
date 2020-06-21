@@ -4,7 +4,6 @@ Standalone wizard based on [quasar](https://quasar.dev/). It is a single page ap
 
 As an authenticated user it's possible to save, manage and publish jobs. Jobs are [Google Jobs](https://jobs.google.com/about/) ready.
 
-![JobWizard](./docs/jobwizard-animated.gif)
 
 
 
